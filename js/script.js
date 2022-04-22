@@ -32,15 +32,26 @@ document.querySelector("#start_game").addEventListener("click",play);
 
 // funzione scatenata dal click del tasto Play
 function play(){
+
+  //Controllo se è già stata effettuata una partita
   if(!played){
+    //Nascondo l' H2 presente in pagina
     document.querySelector("h2").classList.add("hide")
+    //Richiamo la funzione di inizializzaione campo
     init();
+    //modifico il flag "played"
     played = true;
 
   } else {
+
+    // Inizializzo tutte le varibili globali 
+    clickNumber = 0;
+    document.querySelector('.result').innerHTML = "";
     listNumbers = [];
+    gameOver = false;
+
+    //Richiamo la funzione per svuotare il campo di gioco
     reset(containerGame);
-    console.log(listNumbers);
     init();
   }
 
@@ -73,32 +84,36 @@ function handleClickCell(){
   4. se SI attivare la procedura di fine gioco :-)
   */
   
-  this.classList.add('clicked');
+  // Controllo se è avvenuto il game over per bloccare eventuali nuovi click
+  if(!gameOver){
+    this.classList.add('clicked');
+    // if this.myNumber è contenuto nell'array
+    if(bombs.includes(this.cellNumber)){
+      let mySound = new Audio('audio/bomb.mp3');
+      mySound.play();
+      this.innerHTML = `<img class="bomb_icon" src="img/bomb.png" alt=""></img>`;
+      this.classList.add('bomb');
+      gameOver = true;
+      endGame(gameOver);
 
-  // if this.myNumber è contenuto nell'array
-  if(bombs.includes(this.cellNumber)){
-    let mySound = new Audio('audio/bomb.mp3');
-    mySound.play();
-    this.innerHTML = `<img class="bomb_icon" src="img/bomb.png" alt=""></img>`;
-    this.classList.add('bomb');
-    gameOver = true;
-    endGame(gameOver);
+    } else {
+      let mySound = new Audio('audio/flower.mp3');
+      mySound.play();
+      this.innerHTML = `<img class="flower_icon" src="img/flower.png" alt=""></img>`;
+      this.classList.add('flower');
+      clickNumber ++;
 
-  } else {
-    let mySound = new Audio('audio/flower.mp3');
-    mySound.play();
-    this.innerHTML = `<img class="flower_icon" src="img/flower.png" alt=""></img>`;
-    this.classList.add('flower');
-    clickNumber ++;
+      console.log('Numero Click',clickNumber);
+      console.log('Numero Massimo di Click',numberOfCells-BOMBS_NUMBER);
 
-    console.log('Numero Click',clickNumber);
-    console.log('Numero Massimo di Click',numberOfCells-BOMBS_NUMBER);
+      if(clickNumber === (numberOfCells-BOMBS_NUMBER)){
+      endGame(gameOver);  
+      }
+    } 
 
-    if(clickNumber === (numberOfCells-BOMBS_NUMBER)){
-    endGame(gameOver);  
-    }
+  } else if(gameOver){
+    alert("La partita è terminata, premi nuovamente gioca per iniziarne una nuova")
   }
-
 }
 
 function endGame(gameOver){
