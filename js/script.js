@@ -28,12 +28,22 @@ console.log(containerGame);
 
 // Array che contiene i numeri già usciti
 let listNumbers = [];
+
 // Boleana che indica se una partita è già stata fatta o meno
 let played = false;
+
+// Boleana che indica se la partita è conclusa
+let gameOver = false;
+
 // Numero massimo di bombe presenti
 const BOMBS_NUMBER = 16;
+
 // Array che contiene i cellNumber delle bombe
 let bombs = [];
+
+// Contatore delle giocate
+let clickNumber = 0;
+
 
 //console.log(document.querySelector('#game_difficult').value);
 document.querySelector("#start_game").addEventListener("click",play);
@@ -85,16 +95,54 @@ function handleClickCell(){
   if(bombs.includes(this.cellNumber)){
     let mySound = new Audio('audio/bomb.mp3');
     mySound.play();
-
-    this.innerHTML += `<img src="img/bomb.png" alt=""></img>`;
+    this.innerHTML = `<img src="img/bomb.png" alt=""></img>`;
     this.classList.add('bomb');
+    gameOver = true;
+    endGame(gameOver);
 
   } else {
     let mySound = new Audio('audio/flower.mp3');
     mySound.play();
-    this.innerHTML += `<img src="img/flower.png" alt=""></img>`;
+    this.innerHTML = `<img src="img/flower.png" alt=""></img>`;
     this.classList.add('flower');
+    clickNumber ++;
+    console.log(clickNumber);
+
+    // while (!clickNumber < (numCell-BOMBS_NUMBER)){
+    //   endGame(gameOver);  
+    // }
   }
+
+}
+
+function endGame(gameOver){
+
+  const resultBox = document.querySelector('.result');
+  if (gameOver){
+    // Mostro in pagina il risultato ottenuto
+    resultBox.innerHTML = `<h4>Game Over! Hai fatto ${clickNumber} tentativi</h4>`;
+    //Azzero la variabile che conteggia il numero di click
+    clickNumber = 0;
+
+  } else {
+    // Mostro in pagina il risultato ottenuto
+    resultBox.innerHTML = `<h4>Complimenti! Hai fatto ${clickNumber} tentativi ed hai vinto!</h4>`;
+  }
+  
+  
+
+  // for (let i = 0; i < BOMBS_NUMBER; i++){
+  //   const bombId = bombs[i];
+  //   console.log(bombId);
+
+  //   const SquareBomb = document.querySelector("[cellNumber='"+bombId+"']");
+  //   console.log(SquareBomb);
+
+  //   SquareBomb.innerHTML += `<img src="img/bomb.png" alt=""></img>`;
+  //   SquareBomb.classList.add('bomb');
+
+  // }
+
 }
 
 /**
@@ -110,7 +158,7 @@ function createSquare(target,dimension,cellId){
 
   newSquare.innerHTML = `<span class="square_number">${cellId+1}</span>`;
 
-  // creo la proprietà myNymber per andarla a leggere al click
+  // creo la proprietà cellNumber per andarla a leggere al click
   newSquare.cellNumber = cellId;
 
   target.append(newSquare);
@@ -132,7 +180,6 @@ function generateBombs (cellNumbers) {
 
   return generatedBombs;
 }
-
 
 function getUniqueRandomNumber(min, max){
   let number = null;
