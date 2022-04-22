@@ -82,11 +82,8 @@ main{
   display: none;
 }
 
-.square100.clicked .secret_number,
 .square100.clicked img,
-.square81.clicked .secret_number,
 .square81.clicked img,
-.square49.clicked .secret_number,
 .square49.clicked img{
   display: block;
 }
@@ -107,7 +104,6 @@ main{
 .square81.clicked.bomb,
 .square49.clicked.bomb{
   background-color: brown;
-
 }
 
 
