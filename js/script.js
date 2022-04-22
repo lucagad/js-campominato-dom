@@ -44,6 +44,9 @@ let bombs = [];
 // Contatore delle giocate
 let clickNumber = 0;
 
+// numero di celle
+let numberOfCells = 0;
+
 
 //console.log(document.querySelector('#game_difficult').value);
 document.querySelector("#start_game").addEventListener("click",play);
@@ -69,19 +72,21 @@ function init(){
   const level = document.querySelector('#game_difficult').value;
   const gridLevels = [100,81,49];
   const cellNumbers = gridLevels[level];
+  numberOfCells = gridLevels[level];
 
   bombs = generateBombs (cellNumbers);
   console.log ('bombs', bombs);
 
   for(let i = 0; i < cellNumbers; i++){
     const square = createSquare(containerGame,cellNumbers,i);
-    console.log(square);
+    //console.log(square);
     square.addEventListener('click', handleClickCell);
   }
 }
 
 // Funzione scatenata dal click della cella
 function handleClickCell(){
+
   /*
   1."leggere" il numero della cella
   2. verificare se il numero è presente nell'array delle bombe
@@ -106,11 +111,12 @@ function handleClickCell(){
     this.innerHTML = `<img src="img/flower.png" alt=""></img>`;
     this.classList.add('flower');
     clickNumber ++;
-    console.log(clickNumber);
+    console.log('Numero Click',clickNumber);
 
-    // while (!clickNumber < (numCell-BOMBS_NUMBER)){
-    //   endGame(gameOver);  
-    // }
+    console.log('Numero Massimo di Click',numberOfCells-BOMBS_NUMBER);
+    if(clickNumber === (numberOfCells-BOMBS_NUMBER)){
+    endGame(gameOver);  
+    }
   }
 
 }
@@ -127,6 +133,7 @@ function endGame(gameOver){
   } else {
     // Mostro in pagina il risultato ottenuto
     resultBox.innerHTML = `<h4>Complimenti! Hai fatto ${clickNumber} tentativi ed hai vinto!</h4>`;
+    clickNumber = 0;
   }
   
   
