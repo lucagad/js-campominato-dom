@@ -1,0 +1,138 @@
+
+.wrapper{
+  height: 100vh;
+}
+
+header img,
+footer img{
+  height: 50px;
+}
+
+main{
+  height:calc(100vh - 166px);
+  background-color: rgb(16, 126, 199);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hide{
+  display: none;
+}
+
+.container_game_grid{
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  width: 700px;
+  height: 700px;
+}
+
+.square100,
+.square81,
+.square49{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+  color: white;
+}
+
+.square100{    
+  width: calc(100% / 10);
+  height: calc(100% / 10);
+}  
+
+.square100 img{    
+  height: 30px;
+} 
+
+.square81{    
+  width: calc(100% / 9);
+  height: calc(100% / 9);
+} 
+
+.square81 img{    
+  height: 35px;
+} 
+
+.square49{    
+  width: calc(100% / 7);
+  height: calc(100% / 7);
+}  
+
+.square49 img{    
+  height: 45px;
+} 
+
+.square100 .square_number,
+.square81 .square_number,
+.square49 .square_number{
+  color: white;
+  font-weight: bold;
+}
+
+.square100 .secret_number,
+.square100 img,
+.square81 .secret_number,
+.square81 img,
+.square49 .secret_number,
+.square49 img{
+  display: none;
+}
+
+.square100.clicked .secret_number,
+.square100.clicked img,
+.square81.clicked .secret_number,
+.square81.clicked img,
+.square49.clicked .secret_number,
+.square49.clicked img{
+  display: block;
+}
+
+.square100.clicked .square_number,
+.square81.clicked .square_number,
+.square49.clicked .square_number{
+  display: none;
+}
+
+.square100.clicked.flower,
+.square81.clicked.flower,
+.square49.clicked.flower{
+  background-color: rgb(8, 137, 94);
+}
+
+.square100.clicked.bomb,
+.square81.clicked.bomb,
+.square49.clicked.bomb{
+  background-color: brown;
+
+}
+
+
+@media screen and (max-width: 450px){
+
+  main{
+    height:calc(100vh - 228px);
+  }
+
+  .container_game_grid{
+    width: 420px;
+    height: 420px;
+  }
+  
+}
+
+@media screen and (min-width:451px) and (max-width: 576px){
+
+  main{
+    height:calc(100vh - 228px);
+  }
+
+  .container_game_grid{
+    width: 490px;
+    height: 490px;
+  }
+  
+}
