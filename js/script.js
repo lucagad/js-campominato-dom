@@ -25,13 +25,18 @@
 
 const containerGame = document.querySelector('.container_game_grid');
 console.log(containerGame);
+
+// Array che contiene i numeri già usciti
 let listNumbers = [];
+// Boleana che indica se una partita è già stata fatta o meno
 let played = false;
+// Numero massimo di bombe presenti
 const BOMBS_NUMBER = 16;
+// Array che contiene i cellNumber delle bombe
+let bombs = [];
 
-console.log(document.querySelector('#game_difficult').value);
+//console.log(document.querySelector('#game_difficult').value);
 document.querySelector("#start_game").addEventListener("click",play);
-
 
 // funzione scatenata dal click del tasto Play
 function play(){
@@ -49,12 +54,13 @@ function play(){
 
 }
 
+// Funzione che inizializza il campo di gioco
 function init(){
   const level = document.querySelector('#game_difficult').value;
   const gridLevels = [100,81,49];
   const cellNumbers = gridLevels[level];
 
-  const bombs = generateBombs (cellNumbers);
+  bombs = generateBombs (cellNumbers);
   console.log ('bombs', bombs);
 
   for(let i = 0; i < cellNumbers; i++){
@@ -64,7 +70,7 @@ function init(){
   }
 }
 
-// funzione scatenata dal click della cella
+// Funzione scatenata dal click della cella
 function handleClickCell(){
   /*
   1."leggere" il numero della cella
@@ -73,27 +79,22 @@ function handleClickCell(){
   4. se SI attivare la procedura di fine gioco :-)
   */
   
-  // punto 1 modalità più strutturata
-  console.log(this.myNumber);
-  
   this.classList.add('clicked');
 
-  for (let i = 0; i < BOMBS_NUMBER; i++){
-    // if this.myNumber è contenuto nell'array
-    // if(){
+  // if this.myNumber è contenuto nell'array
+  if(bombs.includes(this.cellNumber)){
+    let mySound = new Audio('audio/bomb.mp3');
+    mySound.play();
 
-    // } else {
+    this.innerHTML += `<img src="img/bomb.png" alt=""></img>`;
+    this.classList.add('bomb');
 
-    // }
+  } else {
+    let mySound = new Audio('audio/flower.mp3');
+    mySound.play();
+    this.innerHTML += `<img src="img/flower.png" alt=""></img>`;
+    this.classList.add('flower');
   }
-  // if(this.classList.contains("flower")){
-      //   let mySound = new Audio('audio/flower.mp3')
-      //   mySound.play()
-      // } else {
-      //   let mySound = new Audio('audio/bomb.mp3')
-      //   mySound.play()
-      // }
-
 }
 
 /**
@@ -111,13 +112,6 @@ function createSquare(target,dimension,cellId){
 
   // creo la proprietà myNymber per andarla a leggere al click
   newSquare.cellNumber = cellId;
-
-  // newSquare.classList.add(getFlowerBomb(number));
-  // // if(getFlowerBomb(number)=== "flower"){
-  // //   newSquare.innerHTML += `<img src="img/flower.png" alt=""></img>`
-  // // } else {
-  // //   newSquare.innerHTML += `<img src="img/bomb.png" alt=""></img>`
-  // // }
 
   target.append(newSquare);
 
@@ -157,11 +151,6 @@ function getUniqueRandomNumber(min, max){
 
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-function getFlowerBomb(n){
-    if(n % 2) return 'bomb';
-    return 'flower';
 }
 
 function reset(element) { 
