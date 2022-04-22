@@ -81,11 +81,6 @@ main{
   display: block;
 }
 
-/* .square100.clicked .square_number,
-.square81.clicked .square_number,
-.square49.clicked .square_number{
-  display: none;
-} */
 
 .square100.clicked.flower,
 .square81.clicked.flower,
