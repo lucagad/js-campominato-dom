@@ -37,6 +37,7 @@ main{
   align-items: center;
   border: 2px solid white;
   color: white;
+  background-color: #001433;
 }
 
 .square100{    
@@ -73,14 +74,6 @@ main{
   font-weight: bold;
 }
 
-.square100 .secret_number,
-.square100 img,
-.square81 .secret_number,
-.square81 img,
-.square49 .secret_number,
-.square49 img{
-  display: none;
-}
 
 .square100.clicked img,
 .square81.clicked img,
@@ -88,11 +81,11 @@ main{
   display: block;
 }
 
-.square100.clicked .square_number,
+/* .square100.clicked .square_number,
 .square81.clicked .square_number,
 .square49.clicked .square_number{
   display: none;
-}
+} */
 
 .square100.clicked.flower,
 .square81.clicked.flower,
@@ -105,7 +98,6 @@ main{
 .square49.clicked.bomb{
   background-color: brown;
 }
-
 
 @media screen and (max-width: 450px){
 
